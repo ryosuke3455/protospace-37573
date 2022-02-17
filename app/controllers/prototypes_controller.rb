@@ -1,5 +1,6 @@
 class PrototypesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show,]
+  before_action :not_log_in_hajikitai, only: [:edit, :update, :destroy]
   before_action :syousai_prototype, except: [:index, :new, :create]
 
   def index
@@ -57,5 +58,10 @@ class PrototypesController < ApplicationController
 
   def syousai_prototype
     @prototype = Prototype.find(params[:id])
+  end
+
+  def not_log_in_hajikitai
+    @prototype = Prototype.find(params[:id])
+    redirect_to root_path unless current_user == @prototype.user
   end
 end
