@@ -27,7 +27,7 @@ class PrototypesController < ApplicationController
 
   def edit
     @user = User.new
-    @user = @prototype.user
+    @user = @prototype.user 
     unless user_signed_in?
       redirect_to root_path
     end
@@ -62,6 +62,8 @@ class PrototypesController < ApplicationController
 
   def not_log_in_hajikitai
     @prototype = Prototype.find(params[:id])
-    redirect_to root_path unless current_user == @prototype.user
+    unless current_user == @prototype.user
+      redirect_to root_path
+    end
   end
 end
